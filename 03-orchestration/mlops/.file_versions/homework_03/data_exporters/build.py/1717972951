@@ -1,0 +1,25 @@
+if 'data_exporter' not in globals():
+    from mage_ai.data_preparation.decorators import data_exporter
+
+from sklearn.feature_extraction import DictVectorizer
+
+@data_exporter
+def export_data(filtered_data, *args, **kwargs):
+    """
+    Exports data to some source.
+
+    Args:
+        data: The output from the upstream parent block
+        args: The output from any additional upstream blocks (if applicable)
+
+    Output (optional):
+        Optionally return any object and it'll be logged and
+        displayed when inspecting the block run.
+    """
+    categorical = ['PULocationID', 'DOLocationID']
+    filtered_data[categorical] = filtered_data[categorical].astype(str)
+    data_dicts = filtered_data[categorical].to_dict(orient='records')
+    dv = DictVectorizer()
+    feature_matrix = dv.fit_transform(data_dicts)
+
+    return feature_matrix, filtered_data['duration'], dv# X_train, y_train

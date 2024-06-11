@@ -1,0 +1,40 @@
+if 'data_exporter' not in globals():
+    from mage_ai.data_preparation.decorators import data_exporter
+
+from sklearn.linear_model import LinearRegression
+
+@data_exporter
+def export_data(data, *args, **kwargs):
+    """
+    Exports data to some source.
+
+    Args:
+        data: A tuple containing the training data features (X_train), the training data labels (y_train), and an additional parameter (dv)
+        args: Additional positional arguments
+        kwargs: Additional keyword arguments
+
+    Output (optional):
+        Optionally return any object and it'll be logged and
+        displayed when inspecting the block run.
+    """
+    print("TYPEEEE:",type(data))
+    # Unpack the data tuple
+    X_train, y_train, dv = data
+
+    # Debugging: Print shapes of the input data
+    print(f"X_train shape: {X_train.shape}")
+    print(f"y_train shape: {y_train.shape}")
+    print(f"dv: {dv}")
+
+    # Specify your data exporting logic here
+    lr = LinearRegression()
+
+    # Debugging: Ensure the data is correct before fitting
+    try:
+        lr.fit(X_train, y_train)
+    except Exception as e:
+        print(f"Error during model fitting: {e}")
+        raise
+
+    # Return the trained model or any other relevant object
+    return lr

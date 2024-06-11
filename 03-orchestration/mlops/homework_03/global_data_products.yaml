@@ -1,0 +1,18 @@
+training_set:
+  object_type: pipeline
+  object_uuid: data_preparation
+  outdated_after:
+    seconds: 595
+  project: homework_03
+  repo_path: /home/src/mlops/homework_03
+  settings:
+    build: {}
+training_set_taxi:
+  object_type: pipeline
+  object_uuid: data_preparation
+  outdated_after:
+    seconds: 600
+  project: homework_03
+  repo_path: /home/src/mlops/homework_03
+  settings:
+    build: {}
